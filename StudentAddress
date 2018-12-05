@@ -1,0 +1,57 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+class Student
+{
+	private:
+		string nm,scl,pnum,zip;
+	public:
+		Student(string name="NONAME", string school="NOSCHOOL", string phonenumber="00000000000", string zipcode="000000"){
+			nm=name; scl=school; pnum=phonenumber; zip=zipcode;
+		}
+		
+		
+		void Setname(string name){
+			nm=name;
+		}
+		void Setschool(string school){
+			scl=school;
+		}
+		void Setphone(string phonenumber){
+			pnum=phonenumber;
+		}
+		void Setzip(string zipcode){
+			zip=zipcode;
+		}
+			
+		
+		string Getname() const{
+			return nm;
+		}
+		string Getschool() const{
+			return scl;
+		}
+		string Getphone() const{
+			return pnum;
+		}
+		string Getzip() const{
+			return zip;
+		}
+		
+		
+		void Show() const{
+			cout<<nm<<" "<<scl<<" "<<pnum<<" "<<zip<<endl;
+		}
+};
+int main()
+{
+	string nm,scl,pnum,zip;
+	Student s1("Faye","Cowboy Bebop","88888888","518000");
+	s1.Show();
+	s1.Setname("Spike");
+	nm=s1.Getname();
+	cout<<nm<<endl;
+	return 0;
+}
