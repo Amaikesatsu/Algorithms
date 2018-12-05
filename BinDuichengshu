@@ -1,0 +1,50 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int bin(int dec)
+{
+	int d, i=0;
+	int bi=0;
+	while(dec!=0)
+	{
+		d=(dec%2)*pow(10,i);
+		bi=bi+d;
+		dec=dec/2;
+		i=i+1;
+	}
+	return bi;
+}
+
+int dui(int bi)
+{
+	int d=0,b=bi;
+	while(b!=0)
+	{
+		d=d*10+b%10;
+		b=b/10;
+	}
+	if(d==bi)
+		return 1;
+	else
+		return 0;
+}
+
+int main()
+{
+    int a;
+    int b;
+    int flag;
+    for(a=1993;a>=0;a--)
+    {
+    b=bin(a);
+    flag=dui(b);
+    if(flag==1)
+    {
+	cout<<a<<endl<<b<<endl<<flag<<endl;
+    break;
+	}
+	}
+    return 0;
+}
+
