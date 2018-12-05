@@ -1,0 +1,118 @@
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+typedef struct node
+{
+	int age;
+	char name[20];
+	struct node *next;	
+}Student;
+
+Student * createList(int n) //用Student*构造就可以返回地址值了啊
+{
+	Student * head = new Student; //堆节点，函数创建完了之后还会有；头节点一般不存储数据
+	//如果是写Student head;的话会存储在栈空间里，函数执行完毕就没有了
+	
+	Student * pre = head; //记录上一个节点
+	for(int i=0;i<n;i++)
+	{
+		Student *p = new Student;
+		printf("请输入第%d个学生的姓名和年龄：",i+1);
+		cin>>p->name;
+		cin>>p->age;
+		
+		pre->next=p;
+		pre=p;
+		
+		p->next=NULL;
+	 } 
+	 return head;
+}
+
+int length(Student *head)   //计算链表中的节点个数
+{
+	int i=0;
+	Student *p=head->next;
+	while(p!=NULL)
+	{
+		i++;
+		p=p->next; 
+	}
+	return i;
+}
+
+void insertElement(Student *head, int index)
+{
+	//判定index是否越界
+	if(index<0 || index> length(head))
+		throw "out of range";
+	Student *pre = head;
+	for(int i=0;i<index;i++)
+	{
+		pre = pre->next; 
+	} 
+	
+	 //cout<<pre->name<<endl; //这里到了第二个节点。可以理解为这个结构在第二个节点下面哈哈哈
+	 Student * newNode= new Student;
+	 printf("请输入新节点的姓名和年龄：");
+	 cin>>newNode->name>>newNode->age;
+	 
+	 //如果在程序运行的时候输入的插入位置是2的话，接下来我们要把第二个节点连到新节点的头上
+	 newNode->next = pre->next; //新节点指向第三个节点
+	 pre->next = newNode; //第二个节点指向新节点
+	  
+}
+
+void removeElement(Student *head, int index)
+{
+	if(index<0 || index> length(head)-1) //因为删除的总在新构造的结构的后面，所以要-1
+		throw "out of range";
+	Student *pre = head;
+	for(int i=0;i<index;i++)
+	{
+		pre = pre->next; 
+	} 
+	Student *p = pre->next; //这个要被删除啊
+	pre->next = pre->next->next;
+	delete p;
+}
+
+void display(Student *head)
+{
+	Student *p=head->next;
+	while(p!=NULL)
+	{
+		cout<<p->name<<","<<p->age<<endl;
+		p=p->next; 
+	}
+}
+
+int main()
+{
+	int n=3;
+	Student * head = createList(n);
+	display(head);
+	
+	int p=0;
+	printf("请问亲要在第几个节点后面插东西呢");
+	cin>>p;
+	insertElement(head,p);
+	cout<<length(head)<<endl<<endl;
+	display(head);
+	
+	int index = 0;
+	while(1)
+	{
+	if(length(head)==0)
+	{
+		printf("已经删完了哦亲");
+		break; 
+	}
+	printf("请问亲要删除第几个节点呢：");
+	cin>>index;
+	removeElement(head, index-1); //注意一下删除机制就可以知道为什么会-1
+	display(head);
+	}
+	return 0;
+}
